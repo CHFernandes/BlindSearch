@@ -1,12 +1,3 @@
-grafo = {
-    'a': ['b', 'd', 'e'],
-    'b': ['a', 'c', 'e'],
-    'c': ['b', 'e'],
-    'd': ['a', 'e'],
-    'e': ['a', 'b', 'c', 'd', 'f'],
-    'f': ['e']
-}
-
 entryValue = 0 
 exitValue = 0 
 depths = {}
