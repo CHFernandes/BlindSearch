@@ -56,28 +56,32 @@ citiesRoutes = {
    "Bonn":["Trier","Mainz","Köln" ],
 }
 
-def busca_em_profundidade(graph, selectedCity):
-    father[selectedCity] = None
-    call_to_busca_em_profundidade(graph, selectedCity, 1)
+def busca_em_profundidade_limitada(graph, selectedCity, limit):
 
-def call_to_busca_em_profundidade(graph, city, level):
+    father[selectedCity] = None
+    call_to_busca_em_profundidade(graph, selectedCity, 1, limit)
+
+def call_to_busca_em_profundidade(graph, city, level, limit):
     global entryValue, exitValue
     entryValue += 1
     depths[city] = [entryValue, None]
-    levels[city] = level
-
+    
     children = 0
+
+    levels[city] = level
 
     for neighbor in graph.get(city):
         if not depths.get(neighbor):
+            if level + 1  > limit:
+                return
             father[neighbor] = city
             children += 1
-            call_to_busca_em_profundidade(graph, neighbor, level + 1)
-        
+            call_to_busca_em_profundidade(graph, neighbor, level + 1, limit)
+
     exitValue += 1
     depths[city][1] = exitValue
 
-print("Selecione uma cidade de partida \n")
+print("Selecione uma cidade de partida: \n")
 
 i = 0
 
@@ -92,6 +96,8 @@ selectedCityId-=1
 
 selectedCity = citiesArray[selectedCityId]
 
-busca_em_profundidade(citiesRoutes, selectedCity)
+limit = int(input("Escolha um limite para a busca: \n"))
 
-print(depths)
+busca_em_profundidade_limitada(citiesRoutes, selectedCity, limit)
+
+print(levels)

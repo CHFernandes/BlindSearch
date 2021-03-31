@@ -70,6 +70,8 @@ def call_to_busca_em_profundidade(graph, city, level):
 
     for neighbor in graph.get(city):
         if not depths.get(neighbor):
+            if level + 1 > limit:
+                return
             father[neighbor] = city
             children += 1
             call_to_busca_em_profundidade(graph, neighbor, level + 1)

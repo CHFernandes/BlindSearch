@@ -50,7 +50,7 @@ citiesRoutes = {
    "Bonn":["Trier","Mainz","Köln" ],
 }
 
-def search(graph, selectedCity):
+def search(graph, selectedCity, selectedEndingCity):
     queue = [] 
     visited = {}
     l = 1 
@@ -58,7 +58,7 @@ def search(graph, selectedCity):
 
     queue.append(selectedCity)
     visited[selectedCity] = l 
-    level[selectedCity] = 1 
+    level[selectedCity] = 0 
 
     while len(queue):
         city = queue.pop(0)
@@ -68,8 +68,11 @@ def search(graph, selectedCity):
                 l += 1
                 visited[route] = l
                 level[route] = level[city] + 1
+                if route == selectedEndingCity:
+                    return visited
 
-    return visited, level
+    print("Erro, nenhuma rota foi encontrada!")
+    return visited
 
 print("Selecione uma cidade de partida \n")
 
@@ -86,8 +89,22 @@ selectedCityId-=1
 
 selectedCity = citiesArray[selectedCityId]
 
-visited, level = search(citiesRoutes, selectedCity)
+print("Selecione uma cidade de parada \n")
+
+i = 0
+
+while i < len(citiesArray):
+    nextItem = str(i+1)
+    print(nextItem + " - " + citiesArray[i])
+    i+=1
+
+print()
+selectedEndingCityId = int(input())
+selectedEndingCityId-=1
+
+selectedEndingCity = citiesArray[selectedEndingCityId]
+
+visited = search(citiesRoutes, selectedCity, selectedEndingCity)
 
 print(visited)
-print(level)
     
