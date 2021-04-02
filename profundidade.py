@@ -67,7 +67,6 @@ def call_to_busca_em_profundidade(graph, city, level, selectedEndingCity):
         return
     if city == selectedEndingCity:
         foundValue = True
-        # return
     entryValue += 1
     depths[city] = [entryValue, None]
     levels[city] = level

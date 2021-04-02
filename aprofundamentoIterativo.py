@@ -1,9 +1,3 @@
-entryValue = 0 
-exitValue = 0 
-depths = {}
-father = {}
-levels = {}
-
 citiesArray = [
     "Rostock",
     "Berlin",
@@ -56,30 +50,30 @@ citiesRoutes = {
    "Bonn":["Trier","Mainz","Köln" ],
 }
 
-def busca_em_profundidade(graph, selectedCity):
-    father[selectedCity] = None
-    call_to_busca_em_profundidade(graph, selectedCity, 1)
+def aprofundamento(graph, selectedCity, selectedEndingCity, limit):
+    queue = [] 
+    visited = {}
+    l = 1 
+    level = {} 
 
-def call_to_busca_em_profundidade(graph, city, level):
-    global entryValue, exitValue
-    entryValue += 1
-    depths[city] = [entryValue, None]
-    levels[city] = level
+    queue.append(selectedCity)
+    visited[selectedCity] = l 
+    level[selectedCity] = 0 
 
-    children = 0
+    while len(queue):
+        city = queue.pop(0)
+        for route in graph.get(city):
+            if level[city] == limit:
+                return visited
+            if not visited.get(route):
+                queue.append(route)
+                l += 1
+                visited[route] = l
+                level[route] = level[city] + 1
+                if route == selectedEndingCity:
+                    return visited
 
-    for neighbor in graph.get(city):
-        if not depths.get(neighbor):
-            if level + 1 > limit:
-                return
-            father[neighbor] = city
-            children += 1
-            call_to_busca_em_profundidade(graph, neighbor, level + 1)
-        
-    exitValue += 1
-    depths[city][1] = exitValue
-
-print("Selecione uma cidade de partida \n")
+print("Selecione uma cidade de partida: \n")
 
 i = 0
 
@@ -94,6 +88,25 @@ selectedCityId-=1
 
 selectedCity = citiesArray[selectedCityId]
 
-busca_em_profundidade(citiesRoutes, selectedCity)
+print("Selecione uma cidade de parada \n")
 
-print(depths)
+i = 0
+
+while i < len(citiesArray):
+    nextItem = str(i+1)
+    print(nextItem + " - " + citiesArray[i])
+    i+=1
+
+print()
+selectedEndingCityId = int(input())
+selectedEndingCityId-=1
+
+selectedEndingCity = citiesArray[selectedEndingCityId]
+
+print()
+
+limit = int(input("Escolha um limite para a busca: \n"))
+
+visited = aprofundamento(citiesRoutes, selectedCity, selectedEndingCity, limit)
+
+print(visited)
