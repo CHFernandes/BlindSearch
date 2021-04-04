@@ -43,7 +43,7 @@ citiesRoutes = {
    "Hamburg": ["Lübeck", "Hannover", "Bremen"],
    "Bremen": ["Hamburg", "Hannover", "Munster"],
    "Munster": ["Bremen", "Hannover", "Braunschweig", "Düsseldorf", "Köln"],
-   "Köln":["Düsseldorf","Bonn","Munster" ],
+   "Köln":["Düsseldorf","Bonn","Munster","Mainz"],
    "Düsseldorf":["Munster","Köln","Mainz","Braunschweig"],
    "München":["Ulm","Ingolstadt"],
    "Ulm":["Ingolstadt","München","Stuttgart"],
